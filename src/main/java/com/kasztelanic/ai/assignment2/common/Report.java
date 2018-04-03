@@ -12,12 +12,13 @@ public class Report {
 	private int recursiveCallsCount;
 	private long totalTime;
 	private long timeOfFirstSolution;
+	private String solution;
 
 	public Report() {
 	}
 
 	public Report(Problem problem, Method method, int size, int solutionsCount, int recursiveCallsCount, long totalTime,
-			long timeOfFirstSolution) {
+			long timeOfFirstSolution, String solution) {
 		this.problem = problem;
 		this.method = method;
 		this.size = size;
@@ -25,6 +26,7 @@ public class Report {
 		this.recursiveCallsCount = recursiveCallsCount;
 		this.totalTime = totalTime;
 		this.timeOfFirstSolution = timeOfFirstSolution;
+		this.solution = solution;
 	}
 
 	public Problem getProblem() {
@@ -81,6 +83,14 @@ public class Report {
 
 	public void setTimeOfFirstSolution(long timeOfFirstSolution) {
 		this.timeOfFirstSolution = timeOfFirstSolution;
+	}
+
+	public String getSolution() {
+		return solution;
+	}
+
+	public void setSolution(String solution) {
+		this.solution = solution;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.kasztelanic.ai.assignment2.nquuens;
+package com.kasztelanic.ai.assignment2.nqueens;
 
 import com.kasztelanic.ai.assignment2.common.Report;
 
@@ -13,6 +13,7 @@ public abstract class NQueensAbstractSolver {
 	protected long firstSolutionTime;
 	protected int recursiveCallsCount;
 	protected int solutionsCount;
+	protected int[] firstSolution;
 
 	public NQueensAbstractSolver(int size, boolean firstSolutionOnly) {
 		this.size = size;
@@ -24,5 +25,13 @@ public abstract class NQueensAbstractSolver {
 
 	protected abstract boolean solveInternal(int col);
 
-	protected abstract boolean isBoardValid(int lastInsertedColumn);
+	protected abstract boolean isValid(int column);
+
+	protected static int[][] visualizeSolution(int[] queens) {
+		int[][] solution = new int[queens.length][queens.length];
+		for (int i = 0; i < queens.length; i++) {
+			solution[i][queens[i]] = 1;
+		}
+		return solution;
+	}
 }
