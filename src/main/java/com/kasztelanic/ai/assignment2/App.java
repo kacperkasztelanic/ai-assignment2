@@ -148,10 +148,13 @@ public class App {
 
 		boolean printFirstSolution = line.hasOption(OPTION_PRINT_SHORT);
 
-		String[] heuristicsInput = line.getOptionValues(OPTION_HEURISTICS_SHORT);
-		Heuristic[] heuristics = new Heuristic[heuristicsInput.length];
-		for (int i = 0; i < heuristicsInput.length; i++) {
-			heuristics[i] = parseHeuristic(heuristicsInput[i]);
+		Heuristic[] heuristics = null;
+		if (line.hasOption(OPTION_HEURISTICS_SHORT)) {
+			String[] heuristicsInput = line.getOptionValues(OPTION_HEURISTICS_SHORT);
+			heuristics = new Heuristic[heuristicsInput.length];
+			for (int i = 0; i < heuristicsInput.length; i++) {
+				heuristics[i] = parseHeuristic(heuristicsInput[i]);
+			}
 		}
 
 		CspSolver solver;
