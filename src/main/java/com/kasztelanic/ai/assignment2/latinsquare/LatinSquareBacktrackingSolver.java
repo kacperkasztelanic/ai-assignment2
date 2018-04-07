@@ -2,12 +2,12 @@ package com.kasztelanic.ai.assignment2.latinsquare;
 
 import java.util.Arrays;
 
-import com.kasztelanic.ai.assignment2.common.MatrixUtils;
+import com.kasztelanic.ai.assignment2.common.CspSolver;
 import com.kasztelanic.ai.assignment2.common.Report;
 import com.kasztelanic.ai.assignment2.enums.Method;
 import com.kasztelanic.ai.assignment2.enums.Problem;
 
-public class LatinSquareBacktrackingSolver {
+public class LatinSquareBacktrackingSolver implements CspSolver {
 
 	protected final int size;
 	protected final boolean firstSolutionOnly;

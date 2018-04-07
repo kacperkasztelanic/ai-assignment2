@@ -1,8 +1,9 @@
 package com.kasztelanic.ai.assignment2.nqueens;
 
+import com.kasztelanic.ai.assignment2.common.CspSolver;
 import com.kasztelanic.ai.assignment2.common.Report;
 
-public abstract class NQueensAbstractSolver {
+public abstract class NQueensAbstractSolver implements CspSolver {
 
 	protected final int size;
 	protected final boolean firstSolutionOnly;
@@ -27,10 +28,12 @@ public abstract class NQueensAbstractSolver {
 
 	protected abstract boolean isValid(int column);
 
-	protected static int[][] visualizeSolution(int[] queens) {
-		int[][] solution = new int[queens.length][queens.length];
-		for (int i = 0; i < queens.length; i++) {
-			solution[i][queens[i]] = 1;
+	protected int[][] visualizeSolution(int[] queens) {
+		int[][] solution = new int[size][size];
+		if (queens != null) {
+			for (int i = 0; i < queens.length; i++) {
+				solution[i][queens[i]] = 1;
+			}
 		}
 		return solution;
 	}
