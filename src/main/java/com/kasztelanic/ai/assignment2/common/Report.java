@@ -1,7 +1,7 @@
 package com.kasztelanic.ai.assignment2.common;
 
-import com.kasztelanic.ai.assignment2.enums.Method;
-import com.kasztelanic.ai.assignment2.enums.Problem;
+import com.kasztelanic.ai.assignment2.common.enums.Method;
+import com.kasztelanic.ai.assignment2.common.enums.Problem;
 
 public class Report {
 
@@ -10,15 +10,15 @@ public class Report {
 	private int size;
 	private int solutionsCount;
 	private int recursiveCallsCount;
-	private long totalTime;
-	private long timeOfFirstSolution;
+	private double totalTime;
+	private double timeOfFirstSolution;
 	private String solution;
 
 	public Report() {
 	}
 
-	public Report(Problem problem, Method method, int size, int solutionsCount, int recursiveCallsCount, long totalTime,
-			long timeOfFirstSolution, String solution) {
+	public Report(Problem problem, Method method, int size, int solutionsCount, int recursiveCallsCount,
+			double totalTime, double timeOfFirstSolution, String solution) {
 		this.problem = problem;
 		this.method = method;
 		this.size = size;
@@ -69,19 +69,19 @@ public class Report {
 		this.recursiveCallsCount = recursiveCallsCount;
 	}
 
-	public long getTotalTime() {
+	public double getTotalTime() {
 		return totalTime;
 	}
 
-	public void setTotalTime(long totalTime) {
+	public void setTotalTime(double totalTime) {
 		this.totalTime = totalTime;
 	}
 
-	public long getTimeOfFirstSolution() {
+	public double getTimeOfFirstSolution() {
 		return timeOfFirstSolution;
 	}
 
-	public void setTimeOfFirstSolution(long timeOfFirstSolution) {
+	public void setTimeOfFirstSolution(double timeOfFirstSolution) {
 		this.timeOfFirstSolution = timeOfFirstSolution;
 	}
 
@@ -96,8 +96,8 @@ public class Report {
 	@Override
 	public String toString() {
 		return String.format(
-				"Problem: %s, method: %s, size: %d, no. of solutions: %d, total time: %dms, "
-						+ "time of first solution: %dms, no. of recursive calls: %d",
+				"Problem: %s; method: %s; size: %d; no_of_solutions: %d; total_time(ms): %.3f; "
+						+ "first_solution_time(ms): %.3f; no_of_recursive_calls: %d",
 				problem, method, size, solutionsCount, totalTime, timeOfFirstSolution, recursiveCallsCount);
 	}
 }

@@ -3,8 +3,8 @@ package com.kasztelanic.ai.assignment2.nqueens;
 import java.util.Arrays;
 
 import com.kasztelanic.ai.assignment2.common.Report;
-import com.kasztelanic.ai.assignment2.enums.Method;
-import com.kasztelanic.ai.assignment2.enums.Problem;
+import com.kasztelanic.ai.assignment2.common.enums.Method;
+import com.kasztelanic.ai.assignment2.common.enums.Problem;
 
 public class NQueensBacktrackingSolver extends NQueensAbstractSolver {
 
@@ -16,11 +16,11 @@ public class NQueensBacktrackingSolver extends NQueensAbstractSolver {
 		startTime = System.nanoTime();
 		solveInternal(0);
 		endTime = System.nanoTime();
-		long allSolutionsDuration = 0;
-		long firstSolutionDuration = 0;
+		double allSolutionsDuration = 0;
+		double firstSolutionDuration = 0;
 		if (solutionsCount > 0) {
-			allSolutionsDuration = (endTime - startTime) / 1000000;
-			firstSolutionDuration = (firstSolutionTime - startTime) / 1000000;
+			allSolutionsDuration = (endTime - startTime) / 1000000.0;
+			firstSolutionDuration = (firstSolutionTime - startTime) / 1000000.0;
 		}
 		String sampleSolution = BoardUtils.toReadableString((visualizeSolution(firstSolution)));
 		return new Report(Problem.NQUEENS, Method.BACKTRACKING, size, solutionsCount, recursiveCallsCount,

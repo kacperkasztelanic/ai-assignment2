@@ -1,7 +1,6 @@
 package com.kasztelanic.ai.assignment2;
 
 import java.io.PrintWriter;
-import java.util.Arrays;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -14,10 +13,10 @@ import org.apache.commons.cli.ParseException;
 import com.kasztelanic.ai.assignment2.common.CspSolver;
 import com.kasztelanic.ai.assignment2.common.CspSolverFactory;
 import com.kasztelanic.ai.assignment2.common.Report;
-import com.kasztelanic.ai.assignment2.enums.Method;
-import com.kasztelanic.ai.assignment2.enums.Problem;
+import com.kasztelanic.ai.assignment2.common.enums.Method;
+import com.kasztelanic.ai.assignment2.common.enums.Problem;
 
-public class Main {
+public class App {
 
 	private static final String[] PROBLEM_NQUEENS = { "nQueens", "NQ" };
 	private static final String[] PROBLEM_LATINSQUARE = { "LatinSquare", "LS" };
@@ -37,7 +36,7 @@ public class Main {
 	private final HelpFormatter helpFormatter = new HelpFormatter();
 	private final PrintWriter pw;
 
-	public Main(PrintWriter pw) {
+	public App(PrintWriter pw) {
 		this.pw = pw;
 		Option help = Option.builder(OPTION_HELP_SHORT).longOpt("help").desc("print this message").build();
 		Option problem = Option.builder(OPTION_PROBLEM_SHORT).longOpt("problem")
@@ -129,7 +128,7 @@ public class Main {
 		boolean printFirstSolution = line.hasOption(OPTION_PRINT_SHORT);
 		String[] heuristicsInput = line.getOptionValues(OPTION_HEURISTICS_SHORT);
 
-		System.out.println(Arrays.toString(heuristicsInput));
+		// System.out.println(Arrays.toString(heuristicsInput));
 
 		CspSolver solver;
 		solver = CspSolverFactory.getSolver(problem, method, size, !findAll);
@@ -146,9 +145,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		PrintWriter pw = new PrintWriter(System.out);
-		Main m = new Main(pw);
-		CommandLine line = m.parseInput(args);
-		m.run(line);
+		App app = new App(pw);
+		CommandLine line = app.parseInput(args);
+		app.run(line);
 		pw.close();
 	}
 }

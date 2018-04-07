@@ -1,7 +1,7 @@
 package com.kasztelanic.ai.assignment2.common;
 
-import com.kasztelanic.ai.assignment2.enums.Method;
-import com.kasztelanic.ai.assignment2.enums.Problem;
+import com.kasztelanic.ai.assignment2.common.enums.Method;
+import com.kasztelanic.ai.assignment2.common.enums.Problem;
 import com.kasztelanic.ai.assignment2.latinsquare.LatinSquareBacktrackingSolver;
 import com.kasztelanic.ai.assignment2.nqueens.NQueensBacktrackingSolver;
 import com.kasztelanic.ai.assignment2.nqueens.NQueensForwardCheckingSolver;

@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 import com.kasztelanic.ai.assignment2.common.CspSolver;
 import com.kasztelanic.ai.assignment2.common.Report;
-import com.kasztelanic.ai.assignment2.enums.Method;
-import com.kasztelanic.ai.assignment2.enums.Problem;
+import com.kasztelanic.ai.assignment2.common.enums.Method;
+import com.kasztelanic.ai.assignment2.common.enums.Problem;
 
 public class LatinSquareBacktrackingSolver implements CspSolver {
 
