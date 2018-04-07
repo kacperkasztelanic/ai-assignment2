@@ -32,7 +32,7 @@ public abstract class NQueensAbstractSolver implements CspSolver {
 		int[][] solution = new int[size][size];
 		if (queens != null) {
 			for (int i = 0; i < queens.length; i++) {
-				solution[i][queens[i]] = 1;
+				solution[queens[i]][i] = 1;
 			}
 		}
 		return solution;
