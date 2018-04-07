@@ -13,15 +13,18 @@ import org.apache.commons.cli.ParseException;
 import com.kasztelanic.ai.assignment2.common.CspSolver;
 import com.kasztelanic.ai.assignment2.common.CspSolverFactory;
 import com.kasztelanic.ai.assignment2.common.Report;
+import com.kasztelanic.ai.assignment2.common.enums.Heuristic;
 import com.kasztelanic.ai.assignment2.common.enums.Method;
 import com.kasztelanic.ai.assignment2.common.enums.Problem;
 
 public class App {
 
-	private static final String[] PROBLEM_NQUEENS = { "nQueens", "NQ" };
-	private static final String[] PROBLEM_LATINSQUARE = { "LatinSquare", "LS" };
-	private static final String[] METHOD_BACKTRACKING = { "BackTracking", "B" };
-	private static final String[] METHOD_FORWARDCHECKING = { "ForwardChecking", "F" };
+	private static final String[] PROBLEM_NQUEENS = { "nQueens", "nq" };
+	private static final String[] PROBLEM_LATINSQUARE = { "LatinSquare", "ls" };
+	private static final String[] METHOD_BACKTRACKING = { "BackTracking", "b" };
+	private static final String[] METHOD_FORWARDCHECKING = { "ForwardChecking", "f" };
+	private static final String[] HEURISTIC_VARIABLE = { "Variable", "var" };
+	private static final String[] HEURISTIC_VALUE = { "Value", "val" };
 
 	private static final String OPTION_HELP_SHORT = "h";
 	private static final String OPTION_PROBLEM_SHORT = "p";
@@ -47,9 +50,8 @@ public class App {
 				.valueSeparator().required().build();
 		Option size = Option.builder(OPTION_SIZE_SHORT).longOpt("size").desc("problem size (greater than 0)").hasArg()
 				.argName("SIZE").valueSeparator().required().build();
-		Option heuristics =
-				Option.builder(OPTION_HEURISTICS_SHORT).longOpt("heuristics").desc("heuristics to use when possible")
-						.hasArgs().argName("HEURISTIC1, HEURISTIC2").valueSeparator().build();
+		Option heuristics = Option.builder(OPTION_HEURISTICS_SHORT).longOpt("heuristics")
+				.desc("heuristics to use when possible").hasArgs().argName("HEURISTIC").valueSeparator().build();
 		Option all = Option.builder(OPTION_ALL_SHORT).longOpt("all").desc("find all solutions").build();
 		Option print = Option.builder(OPTION_PRINT_SHORT).longOpt("print").desc("print first solution").build();
 		options.addOption(help);
@@ -103,6 +105,20 @@ public class App {
 		return null;
 	}
 
+	private Heuristic parseHeuristic(String heuristicInput) {
+		for (String s : HEURISTIC_VARIABLE) {
+			if (s.equalsIgnoreCase(heuristicInput)) {
+				return Heuristic.VARIABLE_SELECTION;
+			}
+		}
+		for (String s : HEURISTIC_VALUE) {
+			if (s.equalsIgnoreCase(heuristicInput)) {
+				return Heuristic.VALUE_SELECTION;
+			}
+		}
+		return null;
+	}
+
 	private int parseSize(String sizeInput) {
 		int size = -1;
 		try {
@@ -118,17 +134,25 @@ public class App {
 			printHelp();
 			return;
 		}
+
 		String problemInput = line.getOptionValue(OPTION_PROBLEM_SHORT);
 		Problem problem = parseProblem(problemInput);
+
 		String methodInput = line.getOptionValue(OPTION_METHOD_SHORT);
 		Method method = parseMethod(methodInput);
+
 		String sizeInput = line.getOptionValue(OPTION_SIZE_SHORT);
 		int size = parseSize(sizeInput);
-		boolean findAll = line.hasOption(OPTION_ALL_SHORT);
-		boolean printFirstSolution = line.hasOption(OPTION_PRINT_SHORT);
-		String[] heuristicsInput = line.getOptionValues(OPTION_HEURISTICS_SHORT);
 
-		// System.out.println(Arrays.toString(heuristicsInput));
+		boolean findAll = line.hasOption(OPTION_ALL_SHORT);
+
+		boolean printFirstSolution = line.hasOption(OPTION_PRINT_SHORT);
+
+		String[] heuristicsInput = line.getOptionValues(OPTION_HEURISTICS_SHORT);
+		Heuristic[] heuristics = new Heuristic[heuristicsInput.length];
+		for (int i = 0; i < heuristicsInput.length; i++) {
+			heuristics[i] = parseHeuristic(heuristicsInput[i]);
+		}
 
 		CspSolver solver;
 		solver = CspSolverFactory.getSolver(problem, method, size, !findAll);
@@ -136,6 +160,7 @@ public class App {
 			printHelp();
 			return;
 		}
+
 		Report report = solver.solve();
 		pw.println(report);
 		if (printFirstSolution) {
