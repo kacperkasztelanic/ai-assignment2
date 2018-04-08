@@ -1,6 +1,9 @@
 package com.kasztelanic.ai.assignment2.nqueens;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import com.kasztelanic.ai.assignment2.common.Report;
 import com.kasztelanic.ai.assignment2.common.enums.Method;
@@ -14,8 +17,8 @@ public class NQueensBacktrackingSolver extends NQueensAbstractSolver {
 		super(size, firstSolutionOnly);
 	}
 
-	// @Override
-	public Report solve1() {
+	@Override
+	public Report solve() {
 		startTime = System.nanoTime();
 		solveInternal(0);
 		endTime = System.nanoTime();
@@ -42,9 +45,11 @@ public class NQueensBacktrackingSolver extends NQueensAbstractSolver {
 		}
 
 		recursiveCallsCount++;
-
-		for (int i = 0; i < size; i++) {
-			queens[col] = i;
+		int[] rows = heuristicRowsProposition(col);
+		// int[] rows = rowsProposition(col);
+		// System.out.println(Arrays.toString(rows));
+		for (int i = 0; i < rows.length; i++) {
+			queens[col] = rows[i];
 			if (isValid(col)) {
 				boolean solved = solveInternal(col + 1);
 				if (firstSolutionOnly && solved) {
@@ -65,7 +70,7 @@ public class NQueensBacktrackingSolver extends NQueensAbstractSolver {
 		return true;
 	}
 
-	public Report solve() {
+	public Report solveH() {
 		Arrays.fill(queens, -1);
 		columnIndices = generateClosestToCenterIndicesArray();
 
@@ -78,7 +83,7 @@ public class NQueensBacktrackingSolver extends NQueensAbstractSolver {
 			allSolutionsDuration = (endTime - startTime) / 1000000.0;
 			firstSolutionDuration = (firstSolutionTime - startTime) / 1000000.0;
 		}
-		System.out.println(Arrays.toString(queens));
+		// System.out.println(Arrays.toString(queens));
 		String sampleSolution = BoardUtils.toReadableString((visualizeSolution(firstSolution)));
 		return new Report(Problem.NQUEENS, Method.BACKTRACKING, size, solutionsCount, recursiveCallsCount,
 				allSolutionsDuration, firstSolutionDuration, sampleSolution);
@@ -136,6 +141,43 @@ public class NQueensBacktrackingSolver extends NQueensAbstractSolver {
 		return res;
 	}
 
+	protected int[] rowsProposition(int column) {
+		int[] rows = new int[size];
+		int counter = 0;
+		if (column < size) {
+			for (int i = 0; i < size; i++) {
+				queens[column] = i;
+				if (isValid(column)) {
+					rows[counter] = i;
+					counter++;
+				}
+				queens[column] = -1;
+			}
+		}
+		return Arrays.copyOf(rows, counter);
+	}
+
+	protected int[] heuristicRowsProposition(int column) {
+		List<HeuristicRow> hr = new ArrayList<>();
+		for (int i = 0; i < size; i++) {
+			queens[column] = i;
+			if (isValid(column)) {
+				hr.add(new HeuristicRow(i, getRateForHeuristic(column + 1, i)));
+			}
+			queens[column] = -1;
+		}
+		int[] rows = new int[hr.size()];
+		Collections.sort(hr);
+		for (int i = 0; i < hr.size(); i++) {
+			rows[i] = hr.get(i).row;
+		}
+		return rows;
+	}
+
+	protected int getRateForHeuristic(int column, int row) {
+		return rowsProposition(column).length;
+	}
+
 	protected boolean isValidH(int lastInsertedColumn) {
 		for (int i = 0; i < size; i++) {
 			if (i != lastInsertedColumn && queens[i] != -1 && (queens[i] == queens[lastInsertedColumn]
@@ -145,10 +187,31 @@ public class NQueensBacktrackingSolver extends NQueensAbstractSolver {
 		return true;
 	}
 
-	// public static void main(String[] args) {
-	// NQueensBacktrackingSolver s = new NQueensBacktrackingSolver(25, true);
-	// Report r = s.solveH();
-	// System.out.println(r);
-	// System.out.println(r.getSolution());
-	// }
+	public static void main(String[] args) {
+		NQueensBacktrackingSolver s = new NQueensBacktrackingSolver(15, true);
+		Report r = s.solve();
+		System.out.println(r);
+		System.out.println(r.getSolution());
+	}
+}
+
+class HeuristicRow implements Comparable<HeuristicRow> {
+	public int row;
+	public int cost;
+
+	public HeuristicRow(int row, int cost) {
+		this.row = row;
+		this.cost = cost;
+	}
+
+	@Override
+	public int compareTo(HeuristicRow o) {
+		return this.cost - o.cost;
+	}
+
+	@Override
+	public String toString() {
+		return "(" + row + ", " + cost + ")";
+	}
+
 }
