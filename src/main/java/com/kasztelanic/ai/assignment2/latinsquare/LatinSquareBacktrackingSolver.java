@@ -38,7 +38,7 @@ public class LatinSquareBacktrackingSolver implements CspSolver {
 				allSolutionsDuration, firstSolutionDuration, sampleSolution);
 	}
 
-	protected void runState(byte newValue, byte depth) {
+	protected boolean runState(byte newValue, byte depth) {
 		recursiveCallsCount++;
 		if (isValid(newValue, depth)) {
 			state[depth] = newValue;
@@ -48,19 +48,26 @@ public class LatinSquareBacktrackingSolver implements CspSolver {
 					firstSolution = Arrays.copyOf(state, state.length);
 				}
 				solutionsCount++;
+				return true;
 			}
 			else {
-				spreadChildren(depth);
+				boolean solved = spreadChildren(depth);
+				if (firstSolutionOnly && solved) {
+					return true;
+				}
 			}
 		}
-		state[depth] = -1;
+		return false;
 	}
 
-	protected void spreadChildren(byte depth) {
+	protected boolean spreadChildren(byte depth) {
 		depth++;
-		for (byte i = 0; i < size; i++) {
-			runState(i, depth);
+		boolean found = false;
+		for (byte i = 0; i < size && (!found || !firstSolutionOnly); i++) {
+			found = runState(i, depth);
+			state[depth] = -1;
 		}
+		return found;
 	}
 
 	protected boolean isValid(byte newValue, byte depth) {
