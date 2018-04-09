@@ -22,6 +22,7 @@ public abstract class NQueensAbstractSolver implements CspSolver {
 		this.queens = new int[size];
 	}
 
+	@Override
 	public abstract Report solve();
 
 	protected abstract boolean solveInternal(int col);

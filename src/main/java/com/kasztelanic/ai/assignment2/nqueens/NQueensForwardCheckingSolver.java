@@ -15,6 +15,7 @@ public class NQueensForwardCheckingSolver extends NQueensAbstractSolver {
 		this.fieldsThreatArray = new int[size][size];
 	}
 
+	@Override
 	public Report solve() {
 		startTime = System.nanoTime();
 		solveInternal(0);

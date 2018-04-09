@@ -6,9 +6,9 @@ import com.kasztelanic.ai.assignment2.common.Report;
 import com.kasztelanic.ai.assignment2.common.enums.Method;
 import com.kasztelanic.ai.assignment2.common.enums.Problem;
 
-public class LatinSquareBacktrackingSolver extends LatinSquareAbstractSolver {
+public class LatinSquareForwardCheckingSolver extends LatinSquareAbstractSolver {
 
-	public LatinSquareBacktrackingSolver(int size, boolean firstSolutionOnly) {
+	public LatinSquareForwardCheckingSolver(int size, boolean firstSolutionOnly) {
 		super(size, firstSolutionOnly);
 	}
 
