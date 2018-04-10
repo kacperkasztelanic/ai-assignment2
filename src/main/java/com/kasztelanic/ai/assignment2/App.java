@@ -52,7 +52,8 @@ public class App {
         Option size = Option.builder(OPTION_SIZE_SHORT).longOpt("size").desc("problem size (greater than 0)").hasArg()
                 .argName("SIZE").valueSeparator().required().build();
         Option heuristics = Option.builder(OPTION_HEURISTICS_SHORT).longOpt("heuristics")
-                .desc("heuristics to use when possible").hasArgs().argName("HEURISTIC").valueSeparator().build();
+                .desc("heuristics to use when possible - Variable (var) or Value (val). Can be used more that once")
+                .hasArgs().argName("HEURISTIC").valueSeparator().build();
         Option all = Option.builder(OPTION_ALL_SHORT).longOpt("all").desc("find all solutions").build();
         Option print = Option.builder(OPTION_PRINT_SHORT).longOpt("print").desc("print first solution").build();
         options.addOption(help);

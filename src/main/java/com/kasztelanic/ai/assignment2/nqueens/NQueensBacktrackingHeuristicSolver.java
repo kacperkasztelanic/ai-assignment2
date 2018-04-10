@@ -163,6 +163,16 @@ public class NQueensBacktrackingHeuristicSolver extends NQueensBacktrackingSolve
     private int getRateForHeuristic(int column, int row) {
         return validRowsProposition(column).length;
     }
+
+    public static void main(String[] args) {
+        NQueensBacktrackingHeuristicSolver s = new NQueensBacktrackingHeuristicSolver(13, true);
+        // Report r = s.solve();
+        // Report r = s.solveUsingValueSelectionHeuristic();
+        // Report r = s.solveUsingVariableSelectionHeuristic();
+        Report r = s.solveUsingBothHeuristics();
+        System.out.println(r);
+        // System.out.println(r.getSolution());
+    }
 }
 
 class HeuristicRow implements Comparable<HeuristicRow> {
