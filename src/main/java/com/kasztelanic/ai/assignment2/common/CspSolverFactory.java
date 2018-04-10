@@ -3,6 +3,7 @@ package com.kasztelanic.ai.assignment2.common;
 import com.kasztelanic.ai.assignment2.common.enums.Method;
 import com.kasztelanic.ai.assignment2.common.enums.Problem;
 import com.kasztelanic.ai.assignment2.latinsquare.LatinSquareBacktrackingSolver;
+import com.kasztelanic.ai.assignment2.latinsquare.LatinSquareForwardCheckingSolver;
 import com.kasztelanic.ai.assignment2.nqueens.NQueensBacktrackingSolver;
 import com.kasztelanic.ai.assignment2.nqueens.NQueensForwardCheckingSolver;
 
@@ -23,7 +24,7 @@ public class CspSolverFactory {
                 return new LatinSquareBacktrackingSolver(size, firstSolutionOnly);
             }
             if (method.equals(Method.FORWARDCHECKING)) {
-                return new LatinSquareBacktrackingSolver(size, firstSolutionOnly);
+                return new LatinSquareForwardCheckingSolver(size, firstSolutionOnly);
             }
             return null;
         }

@@ -28,6 +28,7 @@ public class LatinSquareBacktrackingSolver extends LatinSquareAbstractSolver {
                 allSolutionsDuration, firstSolutionDuration, sampleSolution);
     }
 
+    @Override
     protected boolean runState(byte newValue, int depth) {
         recursiveCallsCount++;
         if (isValid(newValue, depth)) {
@@ -49,6 +50,7 @@ public class LatinSquareBacktrackingSolver extends LatinSquareAbstractSolver {
         return false;
     }
 
+    @Override
     protected boolean spreadChildren(int depth) {
         depth++;
         boolean found = false;
@@ -59,8 +61,7 @@ public class LatinSquareBacktrackingSolver extends LatinSquareAbstractSolver {
         return found;
     }
 
-    @Override
-    protected boolean isValid(byte newValue, int depth) {
+    private boolean isValid(byte newValue, int depth) {
         int row = depth % size;
         int column = depth / size;
 

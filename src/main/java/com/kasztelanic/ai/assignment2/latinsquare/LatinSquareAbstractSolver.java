@@ -28,7 +28,9 @@ public abstract class LatinSquareAbstractSolver implements CspSolver {
     @Override
     public abstract Report solve();
 
-    protected abstract boolean isValid(byte newValue, int depth);
+    protected abstract boolean runState(byte newValue, int depth);
+
+    protected abstract boolean spreadChildren(int depth);
 
     protected static byte[][] visualizeSolution(byte[] state, int size) {
         byte[][] solution = new byte[size][size];
