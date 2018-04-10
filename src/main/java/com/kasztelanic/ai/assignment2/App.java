@@ -12,6 +12,7 @@ import org.apache.commons.cli.ParseException;
 
 import com.kasztelanic.ai.assignment2.common.CspSolver;
 import com.kasztelanic.ai.assignment2.common.CspSolverFactory;
+import com.kasztelanic.ai.assignment2.common.HeuristicSolver;
 import com.kasztelanic.ai.assignment2.common.Report;
 import com.kasztelanic.ai.assignment2.common.enums.Heuristic;
 import com.kasztelanic.ai.assignment2.common.enums.Method;
@@ -156,13 +157,28 @@ public class App {
         }
 
         CspSolver solver;
-        solver = CspSolverFactory.getSolver(problem, method, size, !findAll);
+        solver = CspSolverFactory.getSolver(problem, method, size, !findAll, heuristics != null);
         if (solver == null || size <= 0) {
             printHelp();
             return;
         }
 
-        Report report = solver.solve();
+        Report report = null;
+        if (solver instanceof HeuristicSolver) {
+            if (heuristics.length > 1) {
+                report = ((HeuristicSolver) solver).solveUsingBothHeuristics();
+            } else {
+                switch (heuristics[0]) {
+                case VALUE_SELECTION:
+                    report = ((HeuristicSolver) solver).solveUsingValueSelectionHeuristic();
+                    break;
+                case VARIABLE_SELECTION:
+                    report = ((HeuristicSolver) solver).solveUsingVariableSelectionHeuristic();
+                }
+            }
+        } else {
+            report = solver.solve();
+        }
         pw.println(report);
         if (printFirstSolution) {
             pw.println(report.getSolution());
