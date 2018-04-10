@@ -66,6 +66,7 @@ public class NQueensBacktrackingHeuristicSolver extends NQueensBacktrackingSolve
         if (columnProposition == -1) {
             if (solutionsCount == 0) {
                 firstSolutionTime = System.nanoTime();
+                System.out.println(Arrays.toString(queens));
                 firstSolution = Arrays.copyOf(queens, queens.length);
             }
             solutionsCount++;
@@ -132,12 +133,12 @@ public class NQueensBacktrackingHeuristicSolver extends NQueensBacktrackingSolve
         int counter = 0;
         if (column < size) {
             for (int i = 0; i < size; i++) {
-                queens[column] = i;
-                if (isValid(column)) {
+                queens[columnProposition(column)] = i;
+                if (isValid(columnProposition(column))) {
                     rows[counter] = i;
                     counter++;
                 }
-                queens[column] = -1;
+                queens[columnProposition(column)] = -1;
             }
         }
         return Arrays.copyOf(rows, counter);
@@ -146,11 +147,11 @@ public class NQueensBacktrackingHeuristicSolver extends NQueensBacktrackingSolve
     private int[] heuristicRowsProposition(int column) {
         List<HeuristicRow> hr = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            queens[column] = i;
-            if (isValid(column)) {
-                hr.add(new HeuristicRow(i, getRateForHeuristic(column + 1, i)));
+            queens[columnProposition(column)] = i;
+            if (isValid(columnProposition(column))) {
+                hr.add(new HeuristicRow(i, getRateForHeuristic(column + 1)));
             }
-            queens[column] = -1;
+            queens[columnProposition(column)] = -1;
         }
         int[] rows = new int[hr.size()];
         Collections.sort(hr);
@@ -160,18 +161,8 @@ public class NQueensBacktrackingHeuristicSolver extends NQueensBacktrackingSolve
         return rows;
     }
 
-    private int getRateForHeuristic(int column, int row) {
+    private int getRateForHeuristic(int column) {
         return validRowsProposition(column).length;
-    }
-
-    public static void main(String[] args) {
-        NQueensBacktrackingHeuristicSolver s = new NQueensBacktrackingHeuristicSolver(13, true);
-        // Report r = s.solve();
-        // Report r = s.solveUsingValueSelectionHeuristic();
-        // Report r = s.solveUsingVariableSelectionHeuristic();
-        Report r = s.solveUsingBothHeuristics();
-        System.out.println(r);
-        // System.out.println(r.getSolution());
     }
 }
 
