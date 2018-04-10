@@ -1,5 +1,8 @@
 package com.kasztelanic.ai.assignment2.common;
 
+import java.util.Arrays;
+
+import com.kasztelanic.ai.assignment2.common.enums.Heuristic;
 import com.kasztelanic.ai.assignment2.common.enums.Method;
 import com.kasztelanic.ai.assignment2.common.enums.Problem;
 
@@ -13,12 +16,25 @@ public class Report {
     private double totalTime;
     private double timeOfFirstSolution;
     private String solution;
+    private Heuristic[] heuristics = new Heuristic[0];
 
     public Report() {
     }
 
     public Report(Problem problem, Method method, int size, int solutionsCount, int recursiveCallsCount,
             double totalTime, double timeOfFirstSolution, String solution) {
+        this.problem = problem;
+        this.method = method;
+        this.size = size;
+        this.solutionsCount = solutionsCount;
+        this.recursiveCallsCount = recursiveCallsCount;
+        this.totalTime = totalTime;
+        this.timeOfFirstSolution = timeOfFirstSolution;
+        this.solution = solution;
+    }
+
+    public Report(Problem problem, Method method, int size, int solutionsCount, int recursiveCallsCount,
+            double totalTime, double timeOfFirstSolution, String solution, Heuristic[] heuristics) {
         this.problem = problem;
         this.method = method;
         this.size = size;
@@ -93,11 +109,20 @@ public class Report {
         this.solution = solution;
     }
 
+    public Heuristic[] getHeuristics() {
+        return heuristics;
+    }
+
+    public void setHeuristics(Heuristic[] heuristics) {
+        this.heuristics = heuristics;
+    }
+
     @Override
     public String toString() {
         return String.format(
                 "Problem: %s; method: %s; size: %d; no_of_solutions: %d; total_time(ms): %.3f; "
-                        + "first_solution_time(ms): %.3f; no_of_recursive_calls: %d",
-                problem, method, size, solutionsCount, totalTime, timeOfFirstSolution, recursiveCallsCount);
+                        + "first_solution_time(ms): %.3f; no_of_recursive_calls: %d, heuristics=%s",
+                problem, method, size, solutionsCount, totalTime, timeOfFirstSolution, recursiveCallsCount,
+                Arrays.toString(heuristics));
     }
 }

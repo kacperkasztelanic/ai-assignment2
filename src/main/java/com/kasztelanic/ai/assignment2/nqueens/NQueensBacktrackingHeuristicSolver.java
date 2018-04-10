@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 import com.kasztelanic.ai.assignment2.common.HeuristicSolver;
 import com.kasztelanic.ai.assignment2.common.Report;
+import com.kasztelanic.ai.assignment2.common.enums.Heuristic;
 import com.kasztelanic.ai.assignment2.common.enums.Method;
 import com.kasztelanic.ai.assignment2.common.enums.Problem;
 
@@ -44,20 +45,26 @@ public class NQueensBacktrackingHeuristicSolver extends NQueensBacktrackingSolve
     @Override
     public Report solveUsingVariableSelectionHeuristic() {
         useVariableSelectionHeuristic = true;
-        return solve();
+        Report report = solve();
+        report.setHeuristics(new Heuristic[] { Heuristic.VARIABLE_SELECTION });
+        return report;
     }
 
     @Override
     public Report solveUsingValueSelectionHeuristic() {
         useValueSelectionHeuristic = true;
-        return solve();
+        Report report = solve();
+        report.setHeuristics(new Heuristic[] { Heuristic.VALUE_SELECTION });
+        return report;
     }
 
     @Override
     public Report solveUsingBothHeuristics() {
         useVariableSelectionHeuristic = true;
         useValueSelectionHeuristic = true;
-        return solve();
+        Report report = solve();
+        report.setHeuristics(new Heuristic[] { Heuristic.VALUE_SELECTION, Heuristic.VARIABLE_SELECTION });
+        return report;
     }
 
     @Override
@@ -66,7 +73,6 @@ public class NQueensBacktrackingHeuristicSolver extends NQueensBacktrackingSolve
         if (columnProposition == -1) {
             if (solutionsCount == 0) {
                 firstSolutionTime = System.nanoTime();
-                System.out.println(Arrays.toString(queens));
                 firstSolution = Arrays.copyOf(queens, queens.length);
             }
             solutionsCount++;
