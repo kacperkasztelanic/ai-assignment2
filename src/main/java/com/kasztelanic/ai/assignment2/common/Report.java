@@ -121,7 +121,7 @@ public class Report {
     public String toString() {
         return String.format(
                 "Problem: %s; method: %s; size: %d; no_of_solutions: %d; total_time(ms): %.3f; "
-                        + "first_solution_time(ms): %.3f; no_of_recursive_calls: %d, heuristics=%s",
+                        + "first_solution_time(ms): %.3f; no_of_recursive_calls: %d; heuristics=%s",
                 problem, method, size, solutionsCount, totalTime, timeOfFirstSolution, recursiveCallsCount,
                 Arrays.toString(heuristics));
     }
